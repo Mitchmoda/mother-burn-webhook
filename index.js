@@ -26,9 +26,10 @@ app.post('/webhook', async (req, res) => {
         for (const transfer of tokenTransfers) {
             if (!burnProcessed && BURN_ADDRESSES.some(address => 
                 transfer.toUserAccount === address || transfer.to === address)) {
-                const burnAmount = transfer.tokenAmount / 10 ** transfer.tokenDecimal;
+                const burnAmount = transfer.tokenAmount / 10 ** (transfer.tokenDecimal || 6); // Default to 6 decimals if not provided
+                const burnAddress = transfer.toUserAccount || transfer.to;
                 const gifUrl = 'https://media.giphy.com/media/3o7TKTDn976rzVgDf2/giphy.gif';
-                const messageText = `🔥 BURN FUSE IGNITED 🔥\nDetected Burn: ${burnAmount} tokens sent to ${transfer.to}\n(Real-time data from Solana blockchain)`;
+                const messageText = `🔥 BURN FUSE IGNITED 🔥\nDetected Burn: ${burnAmount} tokens sent to ${burnAddress}\n(Real-time data from Solana blockchain)`;
 
                 try {
                     console.log('Attempting to send GIF and message...');
