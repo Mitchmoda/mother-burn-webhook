@@ -26,9 +26,8 @@ app.post('/webhook', async (req, res) => {
             if (!burnProcessed && BURN_ADDRESSES.some(address => 
                 transfer.toUserAccount === address || transfer.to === address)) {
                 const burnAmount = transfer.tokenAmount / 10 ** (transfer.tokenDecimal || 6);
-                const burnAddress = transfer.toUserAccount || transfer.to;
                 const gifUrl = 'https://media.giphy.com/media/3o7TKTDn976rzVgDf2/giphy.gif';
-                const messageText = `🔥 BURN FUSE IGNITED 🔥\nDetected Burn: ${burnAmount} tokens sent to ${burnAddress}\n(Real-time data from Solana blockchain)`;
+                const messageText = `🔥 BURN FUSE IGNITED 🔥\nDetected Burn: ${burnAmount} tokens sent to burn address\n(Real-time data from Solana blockchain)`;
 
                 let attempt = 0;
                 const maxAttempts = 3; // Allow 3 full attempts
